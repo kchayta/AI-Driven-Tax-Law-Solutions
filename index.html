@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxAI - Revolutionizing Tax Law with Artificial Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .demo-box {
+            background: linear-gradient(145deg, #ffffff 0%, #f0f9ff 100%);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chat-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0ea5e9;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-bubble:hover {
+            transform: scale(1.1);
+        }
+        
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: #0ea5e9;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background-color: #0ea5e9;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+        }
+        
+        .bot-message {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #0ea5e9;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-robot text-2xl text-blue-600 mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">Tax<span class="text-blue-600">AI</span></span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#home" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="#about" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">About</a>
+                    <a href="#solutions" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Solutions</a>
+                    <a href="#case-studies" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Case Studies</a>
+                    <a href="#demo" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Demo</a>
+                    <a href="#resources" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition duration-300">Contact Us</a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">About</a>
+                <a href="#solutions" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Solutions</a>
+                <a href="#case-studies" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Case Studies</a>
+                <a href="#demo" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Demo</a>
+                <a href="#resources" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Resources</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Revolutionizing Tax Law with AI</h1>
+                    <p class="text-xl mb-8 text-blue-100">Harness the power of artificial intelligence to simplify tax compliance, reduce risks, and optimize your financial strategy.</p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#demo" class="bg-white text-blue-600 px-6 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition duration-300 text-center">Request a Demo</a>
+                        <a href="#solutions" class="border-2 border-white text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-white hover:text-blue-600 transition duration-300 text-center">Learn More</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3069/3069172.png" alt="AI and Tax Law" class="w-64 h-64 floating">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <div class="bg-gray-100 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-blue-600">95%</p>
+                    <p class="text-gray-600">Accuracy Rate</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-blue-600">10,000+</p>
+                    <p class="text-gray-600">Documents Analyzed</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-blue-600">40%</p>
+                    <p class="text-gray-600">Cost Reduction</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-blue-600">24/7</p>
+                    <p class="text-gray-600">Compliance Monitoring</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">About Our Project</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="md:flex items-center mb-20">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+                    <p class="text-gray-600 mb-6">At TaxAI, we're bridging the gap between cutting-edge artificial intelligence and tax legal expertise. Our mission is to democratize access to sophisticated tax analysis, making complex compliance simple and accessible for businesses of all sizes.</p>
+                    <p class="text-gray-600">By combining deep learning algorithms with our team's decades of tax law experience, we've created solutions that not only automate routine tasks but provide strategic insights previously only available to large corporations with extensive legal departments.</p>
+                </div>
+                <div class="md:w-1/2 md:pl-16">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2885/2885417.png" alt="Mission" class="w-full max-w-md mx-auto">
+                </div>
+            </div>
+            
+            <div class="text-center mb-12">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Meet Our Expert Team</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto">Our interdisciplinary team combines top legal minds with AI specialists to deliver solutions that are both technically sophisticated and legally sound.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-24 h-24 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-balance-scale text-3xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-center text-gray-900 mb-2">Sarah Johnson</h4>
+                    <p class="text-blue-600 text-center mb-4">Chief Tax Counsel</p>
+                    <p class="text-gray-600 text-center">Former IRS attorney with 15+ years in corporate tax law and international compliance.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-24 h-24 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-brain text-3xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-center text-gray-900 mb-2">Dr. Michael Chen</h4>
+                    <p class="text-blue-600 text-center mb-4">AI Research Director</p>
+                    <p class="text-gray-600 text-center">Machine learning pioneer with expertise in natural language processing for legal documents.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-24 h-24 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-3xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-center text-gray-900 mb-2">David Rodriguez</h4>
+                    <p class="text-blue-600 text-center mb-4">Product Strategy</p>
+                    <p class="text-gray-600 text-center">Fintech entrepreneur with a track record of bringing AI solutions to regulated industries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Tax Solutions -->
+    <section id="solutions" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">AI-Powered Tax Solutions</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="feature-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-4 flex items-center justify-center">
+                        <i class="fas fa-file-invoice text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Automated Document Analysis</h3>
+                    <p class="text-gray-600">Our AI instantly reviews tax documents, identifying potential issues and opportunities with 95%+ accuracy.</p>
+                </div>
+                
+                <div class="feature-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-4 flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Real-Time Compliance</h3>
+                    <p class="text-gray-600">Continuous monitoring against changing regulations across all 50 states and international jurisdictions.</p>
+                </div>
+                
+                <div class="feature-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-4 flex items-center justify-center">
+                        <i class="fas fa-chart-bar text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Predictive Risk Modeling</h3>
+                    <p class="text-gray-600">Advanced algorithms predict audit risks and suggest mitigation strategies based on historical patterns.</p>
+                </div>
+                
+                <div class="feature-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-4 flex items-center justify-center">
+                        <i class="fas fa-file-contract text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Contract Review</h3>
+                    <p class="text-gray-600">AI-powered analysis of contracts for tax implications, hidden liabilities, and optimization opportunities.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-8 md:p-12">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Use Cases</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">Small Business Compliance</h4>
+                                <p class="text-gray-600">Automate quarterly filings, payroll taxes, and sales tax compliance with AI that learns your business patterns.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">Enterprise Tax Strategy</h4>
+                                <p class="text-gray-600">Optimize multinational tax positions while maintaining full compliance across jurisdictions.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">M&A Due Diligence</h4>
+                                <p class="text-gray-600">Rapid analysis of tax exposures in potential acquisitions with comprehensive risk scoring.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-blue-50 p-8 md:p-12 flex items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Why AI for Tax?</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span class="text-gray-700"><strong>95% reduction</strong> in manual data entry errors</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span class="text-gray-700"><strong>70% faster</strong> document processing</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span class="text-gray-700"><strong>Continuous updates</strong> with regulatory changes</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span class="text-gray-700"><strong>Audit-ready</strong> documentation automatically generated</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="case-studies" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Case Studies</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto mt-6">See how our AI tax solutions have transformed compliance and strategy for businesses across industries.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-store text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Retail Chain</h3>
+                        <p class="text-blue-600 mb-4">Multi-state sales tax compliance</p>
+                        <p class="text-gray-600 mb-4">A 50-location retail business reduced compliance costs by 60% while eliminating late filing penalties through automated multi-jurisdiction tax calculations.</p>
+                        <div class="flex items-center">
+                            <div class="w-2 h-8 bg-blue-600 mr-3"></div>
+                            <p class="text-gray-900 font-medium">"TaxAI saved us $120,000 in the first year while giving us peace of mind about compliance."</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-laptop-code text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Tech Startup</h3>
+                        <p class="text-blue-600 mb-4">R&D tax credit optimization</p>
+                        <p class="text-gray-600 mb-4">Our AI identified $350,000 in additional R&D tax credits for a Series B startup by analyzing engineering time tracking data that human reviewers had overlooked.</p>
+                        <div class="flex items-center">
+                            <div class="w-2 h-8 bg-blue-600 mr-3"></div>
+                            <p class="text-gray-900 font-medium">"The AI found tax savings opportunities our CPA firm had missed for two years."</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-industry text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Manufacturer</h3>
+                        <p class="text-blue-600 mb-4">International transfer pricing</p>
+                        <p class="text-gray-600 mb-4">A manufacturer with operations in 8 countries reduced transfer pricing documentation costs by 75% while improving audit readiness with our AI-powered analysis.</p>
+                        <div class="flex items-center">
+                            <div class="w-2 h-8 bg-blue-600 mr-3"></div>
+                            <p class="text-gray-900 font-medium">"We went from 3 months of manual work to automated reports in 72 hours."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#contact" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition duration-300">Get Your Custom Solution</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Benefits of AI in Tax Law</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-bullseye text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Accuracy & Error Reduction</h3>
+                    <p class="text-gray-600">AI eliminates human error in calculations and data entry, while machine learning models continuously improve from every document processed.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-clock text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Time & Cost Efficiency</h3>
+                    <p class="text-gray-600">Automate routine compliance work, allowing your team to focus on strategic tax planning and business priorities.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-expand text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Scalability</h3>
+                    <p class="text-gray-600">Easily handle increased volume during tax season or business growth without proportional increases in compliance costs.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-shield-virus text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Risk Mitigation</h3>
+                    <p class="text-gray-600">Predictive analytics identify potential audit triggers before filing, while comprehensive documentation creates audit-ready records.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-lightbulb text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Strategic Insights</h3>
+                    <p class="text-gray-600">AI surfaces tax optimization opportunities and patterns that might be missed in manual review of complex financial data.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-sync-alt text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Real-Time Updates</h3>
+                    <p class="text-gray-600">Our systems continuously incorporate new tax laws and regulatory changes, ensuring your compliance is always current.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section id="demo" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Interactive Demo</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto mt-6">Experience our AI tax analysis with a sample document or upload your own (all uploads are anonymized and secure).</p>
+            </div>
+            
+            <div class="demo-box rounded-xl p-8 md:p-12 max-w-4xl mx-auto">
+                <div class="md:flex">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Try Our Document Analyzer</h3>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-medium mb-2">Select Sample Document</label>
+                            <select id="sample-select" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Choose a sample...</option>
+                                <option value="invoice">Sample Invoice</option>
+                                <option value="contract">Sample Contract Clause</option>
+                                <option value="expense">Sample Expense Report</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-medium mb-2">Or Upload Your Document</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+                                <i class="fas fa-cloud-upload-alt text-3xl text-blue-500 mb-2"></i>
+                                <p class="text-gray-600 mb-2">Drag & drop your file here</p>
+                                <p class="text-sm text-gray-500 mb-3">or</p>
+                                <label for="file-upload" class="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 inline-block">
+                                    Browse Files
+                                </label>
+                                <input id="file-upload" type="file" class="hidden">
+                                <p class="text-xs text-gray-500 mt-2">Supports PDF, Word, Excel (max 10MB)</p>
+                            </div>
+                        </div>
+                        
+                        <button id="analyze-btn" class="w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-search mr-2"></i> Analyze Document
+                        </button>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-50 border border-gray-200 rounded-md p-6 h-full">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">Analysis Results</h4>
+                            <div id="demo-results" class="text-gray-600">
+                                <div class="text-center py-12">
+                                    <i class="fas fa-file-alt text-4xl text-gray-300 mb-4"></i>
+                                    <p>Your document analysis will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-500">This demo shows simulated results. For a complete analysis of your specific situation, <a href="#contact" class="text-blue-600 hover:underline">contact our team</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Hub -->
+    <section id="resources" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Resources Hub</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto mt-6">Stay informed with our latest insights on AI in tax law, regulatory updates, and practical guides.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-newspaper text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span>June 15, 2023</span>
+                            <span class="mx-2">•</span>
+                            <span>Article</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">How AI is Transforming State Sales Tax Compliance</h3>
+                        <p class="text-gray-600 mb-4">Explore the latest developments in automated sales tax solutions and what they mean for multi-state businesses.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-file-pdf text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span>May 28, 2023</span>
+                            <span class="mx-2">•</span>
+                            <span>Whitepaper</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">AI in International Tax: A Compliance Revolution</h3>
+                        <p class="text-gray-600 mb-4">Our comprehensive guide to implementing AI solutions for transfer pricing and cross-border tax challenges.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline flex items-center">
+                            Download PDF <i class="fas fa-download ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-list-check text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span>Updated Weekly</span>
+                            <span class="mx-2">•</span>
+                            <span>Tool</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">AI Compliance Checklist for Tax Professionals</h3>
+                        <p class="text-gray-600 mb-4">A practical framework for evaluating and implementing AI tax solutions while maintaining professional standards.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline flex items-center">
+                            Access Tool <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#" class="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-md text-lg font-medium hover:bg-blue-600 hover:text-white transition duration-300">View All Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials & Partnerships -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Trusted By Industry Leaders</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-user-tie text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">James Wilson</h4>
+                            <p class="text-sm text-gray-600">CFO, TechCorp</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"TaxAI's predictive analytics identified $250k in R&D credits we didn't know we qualified for. Their AI solution pays for itself many times over."</p>
+                    <div class="flex mt-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-user-tie text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Lisa Thompson</h4>
+                            <p class="text-sm text-gray-600">Tax Director, Global Retail Inc.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"We reduced our sales tax compliance team from 5 people to 1 while improving accuracy. The AI handles routine work so we can focus on strategy."</p>
+                    <div class="flex mt-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-user-tie text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Robert Zhang</h4>
+                            <p class="text-sm text-gray-600">Partner, Premier Law Group</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"We partner with TaxAI to enhance our tax practice. Their AI tools give us capabilities previously only available to Big 4 accounting firms."</p>
+                    <div class="flex mt-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-8">
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-8">Our Partners & Affiliates</h3>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                    <div class="text-3xl font-bold text-gray-700 opacity-70">LegalAI</div>
+                    <div class="text-3xl font-bold text-gray-700 opacity-70">FinTech Alliance</div>
+                    <div class="text-3xl font-bold text-gray-700 opacity-70">TaxCloud</div>
+                    <div class="text-3xl font-bold text-gray-700 opacity-70">ComplyRight</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Ready to Transform Your Tax Process?</h2>
+                <div class="w-20 h-1 bg-blue-400 mx-auto"></div>
+                <p class="text-gray-300 max-w-3xl mx-auto mt-6">Schedule a consultation with our team to discuss how AI can optimize your tax compliance and strategy.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-blue-400 mt-1"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">123 AI Tax Plaza, Suite 500<br>San Francisco, CA 94107</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-phone-alt text-blue-400 mt-1"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">(800) 555-AITA<br>Mon-Fri, 9am-5pm PST</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-envelope text-blue-400 mt-1"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">info@taxai.example.com<br>Support: support@taxai.example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h3 class="text-xl font-bold mb-6">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-300 mb-1">Company</label>
+                            <input type="text" id="company" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white">
+                        </div>
+                        
+                        <div>
+                            <label for="interest" class="block text-sm font-medium text-gray-300 mb-1">Interest</label>
+                            <select id="interest" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white">
+                                <option value="">Select an option...</option>
+                                <option value="demo">Request a Demo</option>
+                                <option value="consultation">Schedule Consultation</option>
+                                <option value="pricing">Pricing Information</option>
+                                <option value="partnership">Partnership Inquiry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white"></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input id="privacy" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-700 rounded bg-gray-800">
+                            <label for="privacy" class="ml-2 block text-sm text-gray-300">
+                                I agree to the <a href="#" class="text-blue-400 hover:underline">Privacy Policy</a> and <a href="#" class="text-blue-400 hover:underline">Terms of Service</a>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 transition duration-300">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-robot text-2xl text-blue-400 mr-2"></i>
+                        <span class="text-xl font-bold text-white">Tax<span class="text-blue-400">AI</span></span>
+                    </div>
+                    <p class="text-sm mb-4">AI-powered tax compliance and strategy solutions for businesses and professionals.</p>
+                    <p class="text-xs">© 2023 TaxAI. All rights reserved.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Document Analysis</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Compliance Monitoring</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Risk Assessment</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Contract Review</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Blog</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Whitepapers</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Case Studies</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Webinars</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Terms of Service</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">GDPR Compliance</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">AI Ethics Statement</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-700">
+                <p class="text-xs text-center">
+                    <strong>Disclaimer:</strong> TaxAI provides AI-powered tools to assist with tax compliance and strategy. Our solutions are not a substitute for professional legal advice. Always consult with a qualified tax professional for your specific situation.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Bubble -->
+    <div class="chat-bubble" id="chat-bubble">
+        <i class="fas fa-comment-dots text-2xl"></i>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header flex justify-between items-center">
+            <span>TaxAI Assistant</span>
+            <button id="close-chat" class="text-white hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                Hello! I'm the TaxAI assistant. How can I help you with your tax questions today?
+            </div>
+        </div>
+        <div class="chat-input">
+            <div class="flex">
+                <input type="text" id="chat-input" placeholder="Type your message..." class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <button id="send-message" class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition duration-300">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Demo functionality
+        document.getElementById('analyze-btn').addEventListener('click', function() {
+            const sampleSelect = document.getElementById('sample-select');
+            const resultsDiv = document.getElementById('demo-results');
+            
+            if (sampleSelect.value === '') {
+                resultsDiv.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-circle text-4xl text-red-400 mb-4"></i>
+                        <p>Please select a sample document to analyze</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show loading state
+            resultsDiv.innerHTML = `
+                <div class="text-center py-12">
+                    <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+                    <p>Analyzing document...</p>
+                </div>
+            `;
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                let analysisResult = '';
+                
+                if (sampleSelect.value === 'invoice') {
+                    analysisResult = `
+                        <div>
+                            <h5 class="font-bold text-gray-900 mb-2">Invoice Analysis Results</h5>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>Sales tax correctly calculated for CA jurisdiction (7.25%)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-2"></i>
+                                    <span>Potential issue: Tax ID not visible on document</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-blue-500 mt-1 mr-2"></i>
+                                    <span>Recommendation: Verify tax-exempt status for educational institution purchases</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 bg-blue-50 p-3 rounded-md">
+                                <p class="text-sm text-blue-800"><strong>Confidence:</strong> 92% accuracy based on similar documents</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (sampleSelect.value === 'contract') {
+                    analysisResult = `
+                        <div>
+                            <h5 class="font-bold text-gray-900 mb-2">Contract Clause Analysis</h5>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>Proper tax indemnification clause included</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-2"></i>
+                                    <span>Potential issue: Ambiguous language around international tax liabilities</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-blue-500 mt-1 mr-2"></i>
+                                    <span>Recommendation: Add specific language regarding VAT treatment in EU transactions</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 bg-blue-50 p-3 rounded-md">
+                                <p class="text-sm text-blue-800"><strong>Risk Level:</strong> Moderate (3/10) based on comparable contracts</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (sampleSelect.value === 'expense') {
+                    analysisResult = `
+                        <div>
+                            <h5 class="font-bold text-gray-900 mb-2">Expense Report Analysis</h5>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>Meal expenses properly categorized with client names</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-2"></i>
+                                    <span>Potential issue: $1,200 in travel expenses missing receipts</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-blue-500 mt-1 mr-2"></i>
+                                    <span>Recommendation: Consider alternative documentation for international expenses</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 bg-blue-50 p-3 rounded-md">
+                                <p class="text-sm text-blue-800"><strong>Audit Risk:</strong> Low (2/10) with receipt supplementation</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                resultsDiv.innerHTML = analysisResult;
+            }, 1500);
+        });
+
+        // Chat functionality
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendMessage = document.getElementById('send-message');
+        
+        chatBubble.addEventListener('click', function() {
+            chatWindow.style.display = 'flex';
+        });
+        
+        closeChat.addEventListener('click', function() {
+            chatWindow.style.display = 'none';
+        });
+        
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        sendMessage.addEventListener('click', function() {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    const responses = [
+                        "I can help with general tax questions. For specific advice, please consult a tax professional.",
+                        "Our AI tax tools can analyze documents in seconds. Would you like to try our demo?",
+                        "Tax laws vary by jurisdiction. I recommend checking our resources section for detailed guides.",
+                        "For immediate assistance, you can call our support team at (800) 555-AITA.",
+                        "I've logged your question. A tax specialist will follow up within 24 hours."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, false);
+                }, 1000);
+            }
+        });
+        
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage.click();
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
