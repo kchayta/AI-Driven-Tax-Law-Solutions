@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Tax Compliance & Legal Support: Simplify Your Taxes with Expert Guidance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .chat-window {
+            background: linear-gradient(145deg, #ffffff 0%, #f0f9ff 100%);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .chat-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0ea5e9;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-bubble:hover {
+            transform: scale(1.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #0ea5e9;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+        
+        .user-message {
+            background-color: #0ea5e9;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+        }
+        
+        .bot-message {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+        
+        .how-it-works-step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+        
+        .how-it-works-step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #0ea5e9;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 500px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-robot text-2xl text-blue-600 mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">Tax<span class="text-blue-600">AI</span></span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#home" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="#about" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">About</a>
+                    <a href="#chatbot" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Chatbot</a>
+                    <a href="#benefits" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">Benefits</a>
+                    <a href="#how-it-works" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="#faq" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition duration-300">Contact Us</a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">About</a>
+                <a href="#chatbot" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Chatbot</a>
+                <a href="#benefits" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Benefits</a>
+                <a href="#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">How It Works</a>
+                <a href="#faq" class="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">FAQ</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Streamline Tax Processes with AI-Driven Solutions</h1>
+                    <p class="text-xl mb-8 text-blue-100">Automate compliance, reduce errors, and get instant answers to tax questions with our AI tools and expert chatbot.</p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#chatbot" class="bg-white text-blue-600 px-6 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition duration-300 text-center">Start Chatting Now</a>
+                        <a href="#demo" class="border-2 border-white text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-white hover:text-blue-600 transition duration-300 text-center">Schedule a Demo</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="chat-window w-full max-w-md">
+                        <div class="bg-blue-600 text-white p-4">
+                            <h3 class="font-medium">TaxAI Assistant</h3>
+                        </div>
+                        <div class="p-4 h-64 overflow-y-auto">
+                            <div class="message bot-message">
+                                Hello! I'm your AI tax assistant. How can I help with your tax questions today?
+                            </div>
+                            <div class="message user-message">
+                                What's the VAT rate in Germany?
+                            </div>
+                            <div class="message bot-message">
+                                The standard VAT rate in Germany is 19%. A reduced rate of 7% applies to certain goods like food, books, and medical products.
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-gray-200">
+                            <div class="flex">
+                                <input type="text" placeholder="Type your question..." class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition duration-300">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">About Our AI Tax Solutions</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-file-invoice text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Automated Document Analysis</h3>
+                    <p class="text-gray-600">Our AI instantly reviews tax documents, invoices, and forms, identifying potential issues and opportunities with 95%+ accuracy.</p>
+                </div>
+                
+                <div class="feature-card bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Predictive Risk Assessment</h3>
+                    <p class="text-gray-600">Advanced algorithms predict audit risks and suggest mitigation strategies based on historical patterns and regulatory changes.</p>
+                </div>
+                
+                <div class="feature-card bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-clipboard-check text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Audit-Ready Reports</h3>
+                    <p class="text-gray-600">Generate comprehensive, compliant documentation that meets regulatory standards across multiple jurisdictions.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-blue-50 rounded-xl p-8 md:p-12">
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">AI + Human Expertise</h3>
+                        <p class="text-gray-600 mb-6">While our AI handles routine tasks and initial analysis, all outputs are reviewed by our team of tax professionals to ensure accuracy and compliance.</p>
+                        <p class="text-gray-600">This hybrid approach combines the speed and scalability of artificial intelligence with the nuanced understanding of experienced tax experts.</p>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2885/2885417.png" alt="AI and human collaboration" class="w-full max-w-md mx-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Feature -->
+    <section id="chatbot" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Instant Tax Answers at Your Fingertips</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto mt-6">Our AI chatbot provides 24/7 support for basic tax queries, with responses validated by our expert team.</p>
+            </div>
+            
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="chat-window max-w-md mx-auto">
+                        <div class="bg-blue-600 text-white p-4">
+                            <h3 class="font-medium">TaxAI Assistant</h3>
+                        </div>
+                        <div class="p-4 h-96 overflow-y-auto" id="demo-chat-messages">
+                            <div class="message bot-message">
+                                Hello! I can help with questions about:
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>VAT/GST rates and rules</li>
+                                    <li>Tax deductions and credits</li>
+                                    <li>Filing deadlines</li>
+                                    <li>Document requirements</li>
+                                </ul>
+                                What would you like to know?
+                            </div>
+                            <div class="message user-message">
+                                When is the quarterly VAT return due in the UK?
+                            </div>
+                            <div class="message bot-message">
+                                In the UK, VAT returns are typically due one month and seven days after the end of the accounting period. For example:
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>Q1 (Jan-Mar): Due May 7</li>
+                                    <li>Q2 (Apr-Jun): Due August 7</li>
+                                    <li>Q3 (Jul-Sep): Due November 7</li>
+                                    <li>Q4 (Oct-Dec): Due February 7</li>
+                                </ul>
+                            </div>
+                            <div class="message user-message">
+                                What business expenses are tax deductible?
+                            </div>
+                            <div class="message bot-message">
+                                Common deductible business expenses include:
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>Office supplies and equipment</li>
+                                    <li>Employee salaries and benefits</li>
+                                    <li>Rent for business premises</li>
+                                    <li>Marketing and advertising</li>
+                                    <li>Professional services (legal, accounting)</li>
+                                    <li>Business travel and meals*</li>
+                                </ul>
+                                <p class="text-xs mt-2 italic">*Deduction rules vary by jurisdiction</p>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-gray-200">
+                            <div class="flex">
+                                <input type="text" placeholder="Type your question..." class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition duration-300">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 md:pl-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">24/7 Tax Support</h3>
+                    <p class="text-gray-600 mb-6">Our AI chatbot can help with common tax questions including:</p>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Understanding VAT/GST rules across different jurisdictions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Calculating deductions and tax credits</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Clarifying filing deadlines and document requirements</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Basic tax planning strategies</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-8">
+                        <p class="text-blue-800 text-sm"><i class="fas fa-info-circle mr-2"></i> For complex situations, our chatbot can connect you with a human tax expert for personalized advice.</p>
+                    </div>
+                    
+                    <a href="#contact" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition duration-300">Get Started with TaxAI</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Key Benefits of TaxAI</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-clock text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Efficiency</h3>
+                    <p class="text-gray-600">Save countless hours with automated workflows that handle routine tax tasks in minutes instead of days.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-bullseye text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Accuracy</h3>
+                    <p class="text-gray-600">Reduce human error with AI validation that cross-checks calculations against current tax laws and regulations.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-comments text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Accessibility</h3>
+                    <p class="text-gray-600">Get free, instant guidance through our chatbot anytime, anywhere - no appointment needed for basic questions.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mb-6 flex items-center justify-center">
+                        <i class="fas fa-lock text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Security</h3>
+                    <p class="text-gray-600">Your sensitive financial data is protected with bank-grade encryption and strict access controls.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-blue-600 text-white rounded-xl p-8 md:p-12">
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h3 class="text-2xl font-bold mb-6">By the Numbers</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <p class="text-4xl font-bold mb-2">95%</p>
+                                <p class="text-blue-100">Reduction in manual errors</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-bold mb-2">70%</p>
+                                <p class="text-blue-100">Faster document processing</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-bold mb-2">24/7</p>
+                                <p class="text-blue-100">Tax support availability</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-bold mb-2">50+</p>
+                                <p class="text-blue-100">Jurisdictions covered</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <div class="bg-white text-gray-800 p-6 rounded-lg">
+                            <h4 class="text-lg font-bold mb-4">See TaxAI in Action</h4>
+                            <p class="mb-6">Schedule a personalized demo to see how our AI tax solutions can transform your compliance workflow.</p>
+                            <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">Request a Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">How TaxAI Works</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto mt-6">Simple steps to smarter tax compliance and planning.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="how-it-works-step">
+                    <div class="how-it-works-step-number">1</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Upload Documents or Ask a Question</h3>
+                        <p class="text-gray-600">Submit your tax documents through our secure portal or simply type your tax question into the chatbot interface.</p>
+                    </div>
+                </div>
+                
+                <div class="how-it-works-step">
+                    <div class="how-it-works-step-number">2</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">AI Analysis</h3>
+                        <p class="text-gray-600">Our algorithms analyze your data against current tax laws, identifying potential issues, opportunities, and compliance requirements.</p>
+                    </div>
+                </div>
+                
+                <div class="how-it-works-step">
+                    <div class="how-it-works-step-number">3</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Receive Tailored Insights</h3>
+                        <p class="text-gray-600">Get clear, actionable recommendations including calculations, filing deadlines, risk assessments, and optimization strategies.</p>
+                    </div>
+                </div>
+                
+                <div class="how-it-works-step">
+                    <div class="how-it-works-step-number">4</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Human Expert Review (Optional)</h3>
+                        <p class="text-gray-600">For complex situations, our tax professionals review the AI's findings and provide personalized guidance.</p>
+                    </div>
+                </div>
+                
+                <div class="how-it-works-step">
+                    <div class="how-it-works-step-number">5</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Implement & File</h3>
+                        <p class="text-gray-600">Use our insights to make informed decisions and file with confidence, knowing your compliance is optimized and audit-ready.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#chatbot" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition duration-300">Try Our Chatbot Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is the TaxAI chatbot really free to use?</span>
+                        <i class="fas fa-chevron-down text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600">Yes! Our basic chatbot service is completely free for answering general tax questions. We offer premium services for document analysis, in-depth consultations, and enterprise solutions, but the chatbot advice will always remain free for basic queries.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What tax jurisdictions does TaxAI cover?</span>
+                        <i class="fas fa-chevron-down text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600">Our system currently covers tax regulations for all 50 U.S. states, Canada, the UK, EU member states, Australia, and several other major economies. We're continuously expanding our coverage - if you need a specific jurisdiction not listed, please contact us.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I consult a human expert if needed?</span>
+                        <i class="fas fa-chevron-down text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600">Absolutely. While our AI handles routine questions, we have a network of tax professionals available for consultations. The chatbot can connect you directly when human expertise is required, or you can schedule a consultation through our website.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How accurate is the tax advice from the AI?</span>
+                        <i class="fas fa-chevron-down text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600">Our AI maintains a 95%+ accuracy rate for standard tax questions, as validated by our expert team. For complex or unusual situations, the system will recommend consulting a human expert. All responses are based on current tax laws and are updated immediately when regulations change.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my financial data secure with TaxAI?</span>
+                        <i class="fas fa-chevron-down text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600">Security is our top priority. We use bank-grade 256-bit encryption for all data transfers and storage. Documents are automatically anonymized during processing, and we never share your information with third parties without explicit consent. Our systems are regularly audited for compliance with GDPR and other privacy regulations.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What types of documents can I upload for analysis?</span>
+                        <i class="fas fa-chevron-down text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600">Our system can process PDFs, Word documents, Excel spreadsheets, and image files (JPG/PNG) of common tax documents including invoices, receipts, contracts, financial statements, and tax forms. The maximum file size is 10MB per document.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <p class="text-gray-600 mb-6">Still have questions? Our team is happy to help.</p>
+                <a href="#contact" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition duration-300">Contact Our Support Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Transform Your Tax Process?</h2>
+            <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">Join thousands of businesses and individuals who are simplifying tax compliance with AI.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#chatbot" class="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition duration-300">Start Chatting with the Tax Bot Now</a>
+                <a href="#contact" class="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-white hover:text-blue-600 transition duration-300">Schedule a Demo with Our Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-robot text-2xl text-blue-400 mr-2"></i>
+                        <span class="text-xl font-bold text-white">Tax<span class="text-blue-400">AI</span></span>
+                    </div>
+                    <p class="text-sm mb-4">AI-powered tax compliance and strategy solutions for businesses and professionals.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">AI Tax Chatbot</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Document Analysis</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Compliance Monitoring</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Risk Assessment</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Blog</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Tax Calculators</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Regulatory Updates</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Webinars</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">Terms of Service</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">GDPR Compliance</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition duration-300">AI Ethics</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-700">
+                <p class="text-xs text-center">
+                    <strong>Disclaimer:</strong> TaxAI provides AI-powered tools to assist with tax compliance and strategy. Our solutions are not a substitute for professional legal advice. Always consult with a qualified tax professional for your specific situation.
+                </p>
+                <p class="text-xs text-center mt-2">© 2023 TaxAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Bubble -->
+    <div class="chat-bubble" id="chat-bubble">
+        <i class="fas fa-comment-dots text-2xl"></i>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chat-window" style="display: none;">
+        <div class="bg-blue-600 text-white p-4 flex justify-between items-center">
+            <h3 class="font-medium">TaxAI Assistant</h3>
+            <button id="close-chat" class="text-white hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-4 h-96 overflow-y-auto" id="chat-messages">
+            <div class="message bot-message">
+                Hello! I'm your AI tax assistant. How can I help with your tax questions today?
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex">
+                <input type="text" id="chat-input" placeholder="Type your question..." class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <button id="send-message" class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition duration-300">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Chat functionality
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendMessage = document.getElementById('send-message');
+        
+        chatBubble.addEventListener('click', function() {
+            chatWindow.style.display = 'block';
+        });
+        
+        closeChat.addEventListener('click', function() {
+            chatWindow.style.display = 'none';
+        });
+        
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        sendMessage.addEventListener('click', function() {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    const responses = [
+                        "I can help with general tax questions. For specific advice, please consult a tax professional.",
+                        "Our AI tax tools can analyze documents in seconds. Would you like to try our demo?",
+                        "Tax laws vary by jurisdiction. I recommend checking our resources section for detailed guides.",
+                        "For immediate assistance, you can call our support team at (800) 555-AITA.",
+                        "I've logged your question. A tax specialist will follow up within 24 hours."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, false);
+                }, 1000);
+            }
+        });
+        
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage.click();
+            }
+        });
+
+        // FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+                const icon = question.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
